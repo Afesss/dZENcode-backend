@@ -9,7 +9,7 @@ const io = new Server(server, {
     origin: ["http://localhost:3000", "https://afesss.github.io/dZENcode"],
     methods: ["GET", "POST"],
     credentials: true,
-  },);
+  }});
 
 let onlineUsers = 0;
 io.on("connection", (socket) => {
