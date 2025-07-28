@@ -6,16 +6,19 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+let onlineUsers = 0;
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on("message", (msg) => {
-    console.log("Message received:", msg);
-    socket.broadcast.emit("message", msg);
-  });
+  onlineUsers++;
+  console.log("✅ User connected. Online:", onlineUsers);
+
+  io?.emit("online-users", onlineUsers);
 
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    onlineUsers = Math.max(onlineUsers - 1, 0);
+    console.log("❌ User disconnected. Online:", onlineUsers);
+    io?.emit("online-users", onlineUsers);
   });
 });
 
