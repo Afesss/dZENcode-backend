@@ -4,7 +4,12 @@ const { Server } = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:3000", "https://afesss.github.io/dZENcode"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },);
 
 let onlineUsers = 0;
 io.on("connection", (socket) => {
